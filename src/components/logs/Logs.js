@@ -1,26 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux"; //use connect to connect redux to the component
 import LogItem from "./LogItem";
 import Preloader from "../layout/Preloader";
+import PropTypes from "prop-types";
+import { getLogs } from "../../actions/logActions";
 
-const Logs = () => {
-  const [logs, setLogs] = useState([]);
-  const [loading, setLoading] = useState(false); //argument "false" in the useState call is the default value of loading
-
+const Logs = ({ log: { logs, loading }, getLogs }) => {
   useEffect(() => {
     getLogs();
     //eslint-disable-next-line
   }, []); //commented line and empty array are to avoid errors
 
-  const getLogs = async () => {
-    setLoading(true);
-    const res = await fetch("/logs"); // don't need to add "localhost3000" to /logs since we set up a proxy
-    const data = await res.json();
-
-    setLogs(data);
-    setLoading(false);
-  };
-
-  if (loading) {
+  if (loading || logs === null) {
     return <Preloader />;
   }
 
@@ -38,4 +29,15 @@ const Logs = () => {
   );
 };
 
-export default Logs;
+Logs.propTypes = {
+  log: PropTypes.object.isRequired,
+  getLogs: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  // below line is bringing in the entire state
+  log: state.log,
+});
+
+// Redux requires putting actions into connect() making them props (getLogs is now a prop)
+export default connect(mapStateToProps, { getLogs })(Logs);
