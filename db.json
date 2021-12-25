@@ -1,11 +1,18 @@
 {
   "logs": [
     {
-      "message": "Server needs attention",
-      "attention": true,
-      "tech": "John Doe",
-      "date": "2021-12-12T18:10:43.358Z",
-      "id": 1
+      "id": 1,
+      "message": "test (change)",
+      "attention": false,
+      "tech": "Sam Smith",
+      "date": "2021-12-22T21:06:26.857Z"
+    },
+    {
+      "message": "another test",
+      "attention": false,
+      "tech": "Sarah Wilson",
+      "date": "2021-12-22T21:19:57.626Z",
+      "id": 2
     }
   ],
   "techs": [
